@@ -45,14 +45,43 @@ vs_grafica1.show()
 # multiplicador de precios
 pip_mult = 10000
 
-# -- 0A.1: Hora
+# -- 0A.1: Mes
 df_pe['mes'] = [df_pe['TimeStamp'][i].month for i in range(0, len(df_pe['TimeStamp']))]
+
+# -- 0A.1: Hora
+df_pe['hora'] = [df_pe['TimeStamp'][i].hour for i in range(0, len(df_pe['TimeStamp']))]
 
 # -- 0A.2: Dia de la semana.
 df_pe['dia'] = [df_pe['TimeStamp'][i].weekday() for i in range(0, len(df_pe['TimeStamp']))]
 
 # -- 0B: Boxplot de amplitud de velas (close - open).
 df_pe['co'] = (df_pe['Close'] - df_pe['Open'])*pip_mult
+
+# -- ['hl']: Amplitud de extremos (en pips).
+df_pe['hl'] = (df_pe['High'] - df_pe['Close'])*pip_mult
+
+ 
+# -- Sentido de vela, alcista o bajista
+df_pe['sentido'] = 
+
+
+# -- Ventamas moviles de volarilidad
+  
+  #Volatilidad 5
+    
+df_pe['Close: 5 Day Mean'] = df_pe['Close'].rolling(window=5).mean()
+df_pe[['Close','Close: 5 Day Mean']].plot(figsize=(16,6))
+    
+    #Volatilidad 25
+
+df_pe['Close: 25 Day Mean'] = df_pe['Close'].rolling(window=25).mean()
+df_pe[['Close','Close: 25 Day Mean']].plot(figsize=(16,6))
+
+    #Volatilidad 50
+
+df_pe['Close: 50 Day Mean'] = df_pe['Close'].rolling(window=50).mean()
+df_pe[['Close','Close: 50 Day Mean']].plot(figsize=(16,6))
+
 
 # -- ------------------------------------------------------------ Graficar Boxplot plotly -- #
 vs_grafica2 = vs.g_boxplot_varios(p0_data=df_pe[['co']], p1_norm=False)
